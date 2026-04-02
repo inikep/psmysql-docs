@@ -11,7 +11,16 @@ Certain statistics, such as query time and size, are only available in the JSON 
     "timestamp": "2023-03-29 11:17:03",
     "id": 0,
     "class": "audit",
-    "server_id": 1
+    "event": "startup",
+    "connection_id": 0,
+    "account": { "user": "", "host": "" },
+    "login": { "user": "", "os": "", "ip": "", "proxy": "" },
+    "startup_data": {
+      "server_id": 1,
+      "os_version": "Linux 6.x",
+      "mysql_version": "8.4.8-8",
+      "args": ["mysqld", "--defaults-file=/etc/my.cnf"]
+    }
   },
   {
     "timestamp": "2023-03-29 11:17:05",
@@ -98,16 +107,17 @@ The possible attributes in a JSON object are the following:
 |---|---|
 | `class` | Defines the type of event |
 | `account` | Defines the MySQL account associated with the event. |
-| `connection_data` | Defines the client connection. |
+| `connection_data` | Defines the client connection. On connection events, `connection_attributes` are nested inside this object. |
 | `connection_id` | Defines the client connection identifier |
 | `event` | Defines a subclass of the `event` class |
 | `general_data` | Defines the executed statement or command when the audit record has a class value of `general`. |
 | `id` | Defines the event ID |
 | `login` | Defines how the client connected to the server |
+| `map` | Contains message event payload data (replaces the former `message_attributes` key). Message events also include `account` and `login` fields. |
 | `query_statistics` | Defines optional query statistics and is used for outlier detection |
 | `shutdown_data` | Defines the audit log filter termination |
-| `startup_data` | Defines the initialization of the audit log filter component |
+| `startup_data` | Defines the initialization of the audit log filter component. Contains `server_id`, `os_version`, `mysql_version`, and `args` (an array of command-line arguments). |
 | `table_access_data` | Defines access to a table |
 | `time` | Defines an integer that represents a UNIX timestamp |
-| `timestamp` | Defines a UTC value in the `YYYY-MM_DD hh:mm:ss` format |
+| `timestamp` | Defines a UTC value in the `YYYY-MM-DD hh:mm:ss` format |
 
